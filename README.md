@@ -13,3 +13,6 @@ Members :
   OULD-AMER Mahmoud;
   SABEUR Imène.
 E-mail address for contact : othmaneataallah123@gmail.com
+
+# branch informations
+General branch for everyone.
