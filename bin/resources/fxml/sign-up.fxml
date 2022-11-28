@@ -42,7 +42,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <TextField layoutX="300.0" layoutY="238.0" nodeOrientation="LEFT_TO_RIGHT" opacity="0.92" prefHeight="34.0" prefWidth="157.0" promptText="password here" style="-fx-background-radius: 15;">
+      <TextField fx:id="tf_password_repeat" layoutX="300.0" layoutY="238.0" nodeOrientation="LEFT_TO_RIGHT" opacity="0.92" prefHeight="34.0" prefWidth="157.0" promptText="password here" style="-fx-background-radius: 15;">
          <font>
             <Font name="Arial Rounded MT Bold" size="18.0" />
          </font>
