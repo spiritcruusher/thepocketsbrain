@@ -1,0 +1,29 @@
+{
+  // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+  // Pointez pour afficher la description des attributs existants.
+  // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch App",
+      "request": "launch",
+      "mainClass": "javafiles.application.App",
+      "projectName": "ThePocketsBrain_7494e290"
+    },
+    {
+      "type": "java",
+      "name": "Launch Current File",
+      "request": "launch",
+      "mainClass": "${file}"
+    },
+    {
+      "type": "java",
+      "name": "Launch App",
+      "request": "launch",
+      "mainClass": "javafiles.application.App",
+      "projectName": "ThePocketsBrain_4b3671a6",
+      "vmArgs": "--module-path \"C:/Users/HP/Downloads/javafx-sdk-19/lib\" --add-modules javafx.controls,javafx.fxml"
+    }
+  ]
+}
