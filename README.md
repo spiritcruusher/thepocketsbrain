@@ -4,7 +4,7 @@ A project led by university students for purely pedagogical reasons.
 
 # project informations
 
-Check the CDC.pdf file.
+Check the `additional` folder.
 
 # pedagogical informations
 
