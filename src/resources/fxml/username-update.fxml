@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafiles.controllers.UserUsernameUpdateController">
+   <children>
+      <Label alignment="CENTER" layoutX="123.0" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="55.0" prefWidth="376.0" text="UPDATE USERNAME" textFill="#270d68">
+         <font>
+            <Font name="Segoe UI Semibold" size="24.0" />
+         </font>
+      </Label>
+      <Circle fill="DODGERBLUE" layoutX="166.0" layoutY="112.0" radius="43.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label fx:id="label_username" layoutX="228.0" layoutY="104.0" text="username" textFill="#270d68" underline="true">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tf_new_username" layoutX="311.0" layoutY="189.0" nodeOrientation="LEFT_TO_RIGHT" opacity="0.92" prefHeight="34.0" prefWidth="157.0" promptText="username here" style="-fx-background-radius: 15;">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Label layoutX="131.0" layoutY="194.0" text="new username*" textFill="#270d68">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="button_update" alignment="CENTER" layoutX="207.0" layoutY="296.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="37.0" prefWidth="187.0" style="-fx-background-color: white; -fx-border-color: #270d68; -fx-border-radius: 6px; -fx-cursor: hand;" text="Update" textAlignment="CENTER" textFill="#270d68">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <TextField fx:id="tf_password" layoutX="311.0" layoutY="234.0" nodeOrientation="LEFT_TO_RIGHT" opacity="0.92" prefHeight="34.0" prefWidth="157.0" promptText="password here" style="-fx-background-radius: 15;">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+      </TextField>
+      <Label layoutX="178.0" layoutY="239.0" text="password*" textFill="#270d68">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="button_back" alignment="CENTER" layoutX="39.0" layoutY="34.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="17.0" prefWidth="59.0" style="-fx-background-color: white; -fx-border-color: #270d68; -fx-border-radius: 6px; -fx-cursor: hand;" text="Back" textAlignment="CENTER" textFill="#270d68">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Label fx:id="label_name" layoutX="228.0" layoutY="71.0" text="First and last name" textFill="#270d68" underline="true">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

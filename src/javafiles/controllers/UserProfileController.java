@@ -8,51 +8,56 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 public class UserProfileController implements Initializable {
     @FXML
-    private Button button_update;
+    private Button button_menu;
     @FXML
-    private TextField tf_username;
+    private Button button_update_name;
     @FXML
-    private TextField tf_password;
+    private Button button_update_username;
     @FXML
-    private TextField tf_password_repeat;
+    private Button button_update_password;
+    @FXML
+    private Label label_name;
     @FXML
     private Label label_username;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        button_update.setOnAction(new EventHandler<ActionEvent>() {
+        button_update_username.setOnAction(new EventHandler<ActionEvent>() {
+
             @Override
             public void handle(ActionEvent event) {
-                if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty()) {
-                    if (tf_password_repeat.getText().equals(tf_password.getText())) {
-                        DBUtils.updateUser(event, tf_username.getText(), label_username.getText(),
-                                tf_password.getText());
-                        label_username.setText(tf_username.getText());
-                    } else {
-                        System.out.println("Please enter identical passwords");
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setContentText("Please enter identical passwords!");
-                        alert.show();
-                    }
-                } else {
-                    System.out.println("Please fill in all information");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Please fill in all information to sign up!");
-                    alert.show();
-                }
+                DBUtils.changeScene(event, "/resources/fxml/username-update.fxml", "Username Update",
+                        label_username.getText(), label_name.getText());
             }
+
+        });
+        button_update_name.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "/resources/fxml/name-update.fxml", "Name Update", label_username.getText(),
+                        label_name.getText());
+            }
+
+        });
+        button_update_password.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "/resources/fxml/password-update.fxml", "Password Update",
+                        label_username.getText(), label_name.getText());
+            }
+
         });
     }
 
-    public void setUserInformation(String username) {
+    public void setUserInformation(String username, String name) {
         label_username.setText(username);
+        label_name.setText(name);
     }
-
 }

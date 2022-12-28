@@ -17,6 +17,8 @@ public class SignUpController implements Initializable {
     @FXML
     private TextField tf_username;
     @FXML
+    private TextField tf_name;
+    @FXML
     private TextField tf_password;
     @FXML
     private TextField tf_password_repeat;
@@ -31,9 +33,10 @@ public class SignUpController implements Initializable {
         button_signup.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty()) {
+                if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty()
+                        && !tf_name.getText().trim().isEmpty()) {
                     if (tf_password_repeat.getText().equals(tf_password.getText())) {
-                        DBUtils.signUpUser(event, tf_username.getText(), tf_password.getText());
+                        DBUtils.signUpUser(event, tf_username.getText(), tf_password.getText(), tf_name.getText());
                     } else {
                         System.out.println("Please enter identical passwords");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -52,7 +55,7 @@ public class SignUpController implements Initializable {
         button_login.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/log-in.fxml", "Log In!", null);
+                DBUtils.changeScene(event, "/resources/fxml/log-in.fxml", "Log In!", null, null);
             }
         });
 

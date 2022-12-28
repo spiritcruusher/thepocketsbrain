@@ -25,21 +25,21 @@ public class HomeController implements Initializable {
         button_login.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/log-in.fxml", "Log In!", null);
+                DBUtils.changeScene(event, "/resources/fxml/log-in.fxml", "Log In!", null, null);
             }
         });
 
         button_signup.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/sign-up.fxml", "Sign Up!", null);
+                DBUtils.changeScene(event, "/resources/fxml/sign-up.fxml", "Sign Up!", null, null);
             }
         });
 
         button_menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/application-menu.fxml", "THE POCKET'S BRAIN!", null);
+                DBUtils.changeScene(event, "/resources/fxml/application-menu.fxml", "THE POCKET'S BRAIN!", null, null);
             }
         });
 
