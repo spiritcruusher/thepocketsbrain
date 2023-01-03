@@ -54,6 +54,15 @@ public class UserProfileController implements Initializable {
             }
 
         });
+
+        button_menu.setOnAction((new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "/resources/fxml/user-profile-menu.fxml", "Profile",
+                        label_username.getText(),
+                        label_name.getText());
+            }
+        }));
     }
 
     public void setUserInformation(String username, String name) {

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javafiles.controllers.UserNameUpdateController;
 import javafiles.controllers.UserPasswordUpdateController;
 import javafiles.controllers.UserProfileController;
+import javafiles.controllers.UserProfileMenuController;
 import javafiles.controllers.UserUsernameUpdateController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -43,6 +44,11 @@ public class DBUtils {
                             if (fxmlFile == "/resources/fxml/name-update.fxml") {
                                 UserNameUpdateController userNameUpdateController = loader.getController();
                                 userNameUpdateController.setUserInformation(username, name);
+                            } else {
+                                if (fxmlFile == "/resources/fxml/user-profile-menu.fxml") {
+                                    UserProfileMenuController userProfileMenuController = loader.getController();
+                                    userProfileMenuController.setUserInformation(username, name);
+                                }
                             }
                         }
                     }

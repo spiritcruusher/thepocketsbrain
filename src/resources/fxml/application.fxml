@@ -31,10 +31,5 @@
             <Insets />
          </opaqueInsets>
       </Button>
-      <Button fx:id="button_menu" alignment="CENTER" layoutX="6.0" layoutY="6.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="32.0" prefWidth="62.0" style="-fx-background-color: white; -fx-border-color: white; -fx-border-radius: 6px; -fx-cursor: hand;" text="menu" textAlignment="CENTER" textFill="#270d68" underline="true">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>

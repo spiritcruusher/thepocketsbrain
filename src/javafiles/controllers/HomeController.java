@@ -16,8 +16,6 @@ public class HomeController implements Initializable {
     private Button button_login;
     @FXML
     private Button button_signup;
-    @FXML
-    private Button button_menu;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -33,13 +31,6 @@ public class HomeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/sign-up.fxml", "Sign Up!", null, null);
-            }
-        });
-
-        button_menu.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/application-menu.fxml", "THE POCKET'S BRAIN!", null, null);
             }
         });
 
