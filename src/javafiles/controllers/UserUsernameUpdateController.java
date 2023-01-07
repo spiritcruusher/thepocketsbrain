@@ -26,6 +26,8 @@ public class UserUsernameUpdateController implements Initializable {
     private Button button_update;
     @FXML
     private Button button_back;
+    @FXML
+    Label user_id;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -37,7 +39,7 @@ public class UserUsernameUpdateController implements Initializable {
                     DBUtils.updateUserUsername(event, label_username.getText(), tf_new_username.getText(),
                             tf_password.getText(), label_name.getText());
                     DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", label_username.getText(),
-                            label_name.getText());
+                            label_name.getText(), user_id.getText());
                 } else {
                     System.out.println("Please fill in all information");
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -53,14 +55,15 @@ public class UserUsernameUpdateController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", label_username.getText(),
-                        label_name.getText());
+                        label_name.getText(), user_id.getText());
             }
 
         });
     }
 
-    public void setUserInformation(String username, String name) {
+    public void setUserInformation(String username, String name, String id) {
         label_username.setText(username);
         label_name.setText(name);
+        user_id.setText(id);
     }
 }

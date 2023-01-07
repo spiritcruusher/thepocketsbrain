@@ -22,7 +22,8 @@ import javafx.scene.Node;
 
 public class DBUtils {
 
-    public static void changeScene(ActionEvent event, String fxmlFile, String title, String username, String name) {
+    public static void changeScene(ActionEvent event, String fxmlFile, String title, String username, String name,
+            String id) {
         Parent root = null;
 
         if (username != null) {
@@ -31,23 +32,23 @@ public class DBUtils {
                 root = loader.load();
                 if (fxmlFile == "/resources/fxml/user-profile.fxml") {
                     UserProfileController userProfileController = loader.getController();
-                    userProfileController.setUserInformation(username, name);
+                    userProfileController.setUserInformation(username, name, id);
                 } else {
                     if (fxmlFile == "/resources/fxml/username-update.fxml") {
                         UserUsernameUpdateController userUsernameUpdateController = loader.getController();
-                        userUsernameUpdateController.setUserInformation(username, name);
+                        userUsernameUpdateController.setUserInformation(username, name, id);
                     } else {
                         if (fxmlFile == "/resources/fxml/password-update.fxml") {
                             UserPasswordUpdateController userPasswordUpdateController = loader.getController();
-                            userPasswordUpdateController.setUserInformation(username, name);
+                            userPasswordUpdateController.setUserInformation(username, name, id);
                         } else {
                             if (fxmlFile == "/resources/fxml/name-update.fxml") {
                                 UserNameUpdateController userNameUpdateController = loader.getController();
-                                userNameUpdateController.setUserInformation(username, name);
+                                userNameUpdateController.setUserInformation(username, name, id);
                             } else {
                                 if (fxmlFile == "/resources/fxml/user-profile-menu.fxml") {
                                     UserProfileMenuController userProfileMenuController = loader.getController();
-                                    userProfileMenuController.setUserInformation(username, name);
+                                    userProfileMenuController.setUserInformation(username, name, id);
                                 }
                             }
                         }
@@ -95,7 +96,7 @@ public class DBUtils {
                 psInsert.setString(3, name);
                 psInsert.executeUpdate();
 
-                changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", username, name);
+                changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", username, name, null);
             }
 
         } catch (SQLException e) {
@@ -136,8 +137,10 @@ public class DBUtils {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         PreparedStatement userName = null;
+        PreparedStatement userId = null;
         ResultSet resultSet = null;
         ResultSet userNameResultSet = null;
+        ResultSet idResultSet = null;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql_ihm", "root", "mysql123");
             preparedStatement = connection.prepareStatement("SELECT password FROM users WHERE username = ?");
@@ -146,6 +149,9 @@ public class DBUtils {
             userName = connection.prepareStatement("SELECT name FROM users WHERE username = ?");
             userName.setString(1, username);
             userNameResultSet = userName.executeQuery();
+            userId = connection.prepareStatement("SELECT user_id FROM users WHERE username = ?");
+            userId.setString(1, username);
+            idResultSet = userId.executeQuery();
 
             if (!resultSet.isBeforeFirst()) {
                 System.out.println("User not found in the database!");
@@ -153,11 +159,13 @@ public class DBUtils {
                 alert.setContentText("Provided credentials are incorrect!");
                 alert.show();
             } else {
-                while (resultSet.next() && userNameResultSet.next()) {
+                while (resultSet.next() && userNameResultSet.next() && idResultSet.next()) {
                     String retrievedPassword = resultSet.getString("password");
                     String retrievedUserName = userNameResultSet.getString("name");
+                    String retrievedId = idResultSet.getString("user_id");
                     if (retrievedPassword.equals(password)) {
-                        changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", username, retrievedUserName);
+                        changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", username, retrievedUserName,
+                                retrievedId);
                     } else {
                         System.out.println("Password did not match!");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -241,6 +249,8 @@ public class DBUtils {
         PreparedStatement psInsert = null;
         PreparedStatement psCheckUserExists = null;
         ResultSet resultSet = null;
+        PreparedStatement userId = null;
+        ResultSet idResultSet = null;
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql_ihm", "root", "mysql123");
@@ -258,8 +268,12 @@ public class DBUtils {
                 psInsert.setString(1, newUsername);
                 psInsert.setString(2, username);
                 psInsert.executeUpdate();
-                UserUsernameUpdateController userUsernameUpdateController = new UserUsernameUpdateController();
-                userUsernameUpdateController.setUserInformation(newUsername, name);
+                userId = connection.prepareStatement("SELECT user_id FROM users WHERE username = ?");
+                userId.setString(1, username);
+                idResultSet = userId.executeQuery();
+                String retrievedId = idResultSet.getString("user_id");
+                changeScene(event, "/resources/fxml/username-update.fxml", "Profile", username, null,
+                        retrievedId);
 
             }
 
@@ -301,6 +315,10 @@ public class DBUtils {
         Connection connection = null;
         PreparedStatement psInsert = null;
         ResultSet resultSet = null;
+        PreparedStatement psGet = null;
+        ResultSet resultSet2 = null;
+        PreparedStatement userId = null;
+        ResultSet idResultSet = null;
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql_ihm", "root", "mysql123");
@@ -308,6 +326,27 @@ public class DBUtils {
             psInsert.setString(1, name);
             psInsert.setString(2, username);
             psInsert.executeUpdate();
+            psGet = connection.prepareStatement("SELECT name FROM users WHERE username = ?");
+            psGet.setString(1, username);
+            resultSet2 = psGet.executeQuery();
+            userId = connection.prepareStatement("SELECT user_id FROM users WHERE username = ?");
+            userId.setString(1, username);
+            idResultSet = userId.executeQuery();
+            String retrievedId = idResultSet.getString("user_id");
+            changeScene(event, "/resources/fxml/name-update.fxml", "Profile", username, null,
+                    retrievedId);
+            if (!resultSet2.isBeforeFirst()) {
+                System.out.println("User not found in the database!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Provided credentials are incorrect!");
+                alert.show();
+            } else {
+                while (resultSet2.next()) {
+                    String retrievedName = resultSet2.getString("name");
+                    UserNameUpdateController userNameUpdateController = new UserNameUpdateController();
+                    userNameUpdateController.setUserName(retrievedName);
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

@@ -24,6 +24,8 @@ public class UserProfileController implements Initializable {
     private Label label_name;
     @FXML
     private Label label_username;
+    @FXML
+    private Label user_id;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -32,7 +34,7 @@ public class UserProfileController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/username-update.fxml", "Username Update",
-                        label_username.getText(), label_name.getText());
+                        label_username.getText(), label_name.getText(), user_id.getText());
             }
 
         });
@@ -41,7 +43,7 @@ public class UserProfileController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/name-update.fxml", "Name Update", label_username.getText(),
-                        label_name.getText());
+                        label_name.getText(), user_id.getText());
             }
 
         });
@@ -50,7 +52,7 @@ public class UserProfileController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/password-update.fxml", "Password Update",
-                        label_username.getText(), label_name.getText());
+                        label_username.getText(), label_name.getText(), user_id.getText());
             }
 
         });
@@ -60,13 +62,14 @@ public class UserProfileController implements Initializable {
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/user-profile-menu.fxml", "Profile",
                         label_username.getText(),
-                        label_name.getText());
+                        label_name.getText(), user_id.getText());
             }
         }));
     }
 
-    public void setUserInformation(String username, String name) {
+    public void setUserInformation(String username, String name, String id) {
         label_username.setText(username);
         label_name.setText(name);
+        user_id.setText(id);
     }
 }

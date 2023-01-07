@@ -29,9 +29,7 @@ public class UserProfileMenuController implements Initializable {
     @FXML
     private Button button_logout;
     @FXML
-    private Button button_managment;
-    @FXML
-    private Button button_statistics;
+    private Label user_id;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -40,7 +38,7 @@ public class UserProfileMenuController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/username-update.fxml", "Username Update",
-                        label_username.getText(), label_name.getText());
+                        label_username.getText(), label_name.getText(), null);
             }
 
         });
@@ -49,7 +47,7 @@ public class UserProfileMenuController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/name-update.fxml", "Name Update", label_username.getText(),
-                        label_name.getText());
+                        label_name.getText(), user_id.getText());
             }
 
         });
@@ -58,7 +56,7 @@ public class UserProfileMenuController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/password-update.fxml", "Password Update",
-                        label_username.getText(), label_name.getText());
+                        label_username.getText(), label_name.getText(), user_id.getText());
             }
 
         });
@@ -67,22 +65,23 @@ public class UserProfileMenuController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", label_username.getText(),
-                        label_name.getText());
+                        label_name.getText(), user_id.getText());
             }
         }));
 
         button_logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/application.fxml", "Home", null, null);
+                DBUtils.changeScene(event, "/resources/fxml/application.fxml", "Home", null, null, null);
             }
         });
 
     }
 
-    public void setUserInformation(String username, String name) {
+    public void setUserInformation(String username, String name, String id) {
         label_username.setText(username);
         label_name.setText(name);
         label_username_menu.setText(username);
+        user_id.setText(id);
     }
 }

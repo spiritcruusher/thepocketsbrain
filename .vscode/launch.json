@@ -23,7 +23,7 @@
       "request": "launch",
       "mainClass": "javafiles.application.App",
       "projectName": "ThePocketsBrain_4b3671a6",
-      "vmArgs": "--module-path \"C:/Users/HP/Downloads/javafx-sdk-19/lib\" --add-modules javafx.controls,javafx.fxml"
+      "vmArgs": "--module-path \"D:/Users/HP/Downloads/javafx-sdk-19/lib\" --add-modules javafx.controls,javafx.fxml"
     }
   ]
 }
