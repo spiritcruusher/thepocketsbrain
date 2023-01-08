@@ -37,8 +37,7 @@ public class UserProfileMenuController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/username-update.fxml", "Username Update",
-                        label_username.getText(), label_name.getText(), null);
+                DBUtils.changeScene(event, "/resources/fxml/username-update.fxml", "Username Update", null);
             }
 
         });
@@ -46,8 +45,7 @@ public class UserProfileMenuController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/name-update.fxml", "Name Update", label_username.getText(),
-                        label_name.getText(), user_id.getText());
+                DBUtils.changeScene(event, "/resources/fxml/name-update.fxml", "Name Update", user_id.getText());
             }
 
         });
@@ -56,7 +54,7 @@ public class UserProfileMenuController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/password-update.fxml", "Password Update",
-                        label_username.getText(), label_name.getText(), user_id.getText());
+                        user_id.getText());
             }
 
         });
@@ -64,24 +62,22 @@ public class UserProfileMenuController implements Initializable {
         button_menu.setOnAction((new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", label_username.getText(),
-                        label_name.getText(), user_id.getText());
+                DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", user_id.getText());
             }
         }));
 
         button_logout.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/application.fxml", "Home", null, null, null);
+                DBUtils.changeScene(event, "/resources/fxml/application.fxml", "Home", null);
             }
         });
 
     }
 
-    public void setUserInformation(String username, String name, String id) {
-        label_username.setText(username);
-        label_name.setText(name);
-        label_username_menu.setText(username);
+    public void setUserInformation(String id) {
         user_id.setText(id);
+        label_username.setText(DBUtils.getUsername(id));
+        label_name.setText(DBUtils.getUserName(id));
     }
 }

@@ -38,8 +38,7 @@ public class UserUsernameUpdateController implements Initializable {
                 if (!tf_new_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty()) {
                     DBUtils.updateUserUsername(event, label_username.getText(), tf_new_username.getText(),
                             tf_password.getText(), label_name.getText());
-                    DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", label_username.getText(),
-                            label_name.getText(), user_id.getText());
+                    DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", user_id.getText());
                 } else {
                     System.out.println("Please fill in all information");
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -54,16 +53,15 @@ public class UserUsernameUpdateController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", label_username.getText(),
-                        label_name.getText(), user_id.getText());
+                DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", user_id.getText());
             }
 
         });
     }
 
-    public void setUserInformation(String username, String name, String id) {
-        label_username.setText(username);
-        label_name.setText(name);
+    public void setUserInformation(String id) {
         user_id.setText(id);
+        label_username.setText(DBUtils.getUsername(id));
+        label_name.setText(DBUtils.getUserName(id));
     }
 }

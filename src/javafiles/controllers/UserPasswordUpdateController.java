@@ -42,8 +42,7 @@ public class UserPasswordUpdateController implements Initializable {
                         && !tf_new_password_repeat.getText().trim().isEmpty()) {
                     if (tf_new_password_repeat.getText().equals(tf_new_password.getText())) {
                         DBUtils.updateUserPassword(event, label_username.getText(), null, tf_new_password.getText());
-                        DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile",
-                                label_username.getText(), label_name.getText(), user_id.getText());
+                        DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", user_id.getText());
                     } else {
                         System.out.println("Please enter identical passwords");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -62,17 +61,16 @@ public class UserPasswordUpdateController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", label_username.getText(),
-                        label_name.getText(), user_id.getText());
+                DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", user_id.getText());
             }
 
         });
     }
 
-    public void setUserInformation(String username, String name, String id) {
-        label_username.setText(username);
-        label_name.setText(name);
+    public void setUserInformation(String id) {
         user_id.setText(id);
+        label_username.setText(DBUtils.getUsername(id));
+        label_name.setText(DBUtils.getUserName(id));
     }
 
 }

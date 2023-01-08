@@ -34,7 +34,7 @@ public class UserProfileController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/username-update.fxml", "Username Update",
-                        label_username.getText(), label_name.getText(), user_id.getText());
+                        user_id.getText());
             }
 
         });
@@ -42,8 +42,8 @@ public class UserProfileController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/name-update.fxml", "Name Update", label_username.getText(),
-                        label_name.getText(), user_id.getText());
+                DBUtils.changeScene(event, "/resources/fxml/name-update.fxml", "Name Update",
+                        user_id.getText());
             }
 
         });
@@ -52,7 +52,7 @@ public class UserProfileController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.changeScene(event, "/resources/fxml/password-update.fxml", "Password Update",
-                        label_username.getText(), label_name.getText(), user_id.getText());
+                        user_id.getText());
             }
 
         });
@@ -60,16 +60,14 @@ public class UserProfileController implements Initializable {
         button_menu.setOnAction((new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/user-profile-menu.fxml", "Profile",
-                        label_username.getText(),
-                        label_name.getText(), user_id.getText());
+                DBUtils.changeScene(event, "/resources/fxml/user-profile-menu.fxml", "Profile", user_id.getText());
             }
         }));
     }
 
-    public void setUserInformation(String username, String name, String id) {
-        label_username.setText(username);
-        label_name.setText(name);
+    public void setUserInformation(String id) {
         user_id.setText(id);
+        label_username.setText(DBUtils.getUsername(id));
+        label_name.setText(DBUtils.getUserName(id));
     }
 }

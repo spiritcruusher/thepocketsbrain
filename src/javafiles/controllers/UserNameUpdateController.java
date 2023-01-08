@@ -34,8 +34,7 @@ public class UserNameUpdateController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 DBUtils.updateUserName(event, label_username.getText(), tf_new_name.getText(), tf_password.getText());
-                DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", label_username.getText(),
-                        label_name.getText(), user_id.getText());
+                DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", user_id.getText());
             }
 
         });
@@ -43,19 +42,14 @@ public class UserNameUpdateController implements Initializable {
         button_back.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", label_username.getText(),
-                        label_name.getText(), user_id.getText());
+                DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", user_id.getText());
             }
         });
     }
 
-    public void setUserInformation(String username, String name, String id) {
-        label_username.setText(username);
-        label_name.setText(name);
+    public void setUserInformation(String id) {
         user_id.setText(id);
-    }
-
-    public void setUserName(String name) {
-        label_name.setText(name);
+        label_username.setText(DBUtils.getUsername(id));
+        label_name.setText(DBUtils.getUserName(id));
     }
 }
