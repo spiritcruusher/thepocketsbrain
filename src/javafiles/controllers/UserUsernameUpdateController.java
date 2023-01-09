@@ -36,8 +36,8 @@ public class UserUsernameUpdateController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if (!tf_new_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty()) {
-                    DBUtils.updateUserUsername(event, label_username.getText(), tf_new_username.getText(),
-                            tf_password.getText(), label_name.getText());
+                    DBUtils.updateUserUsername(event, user_id.getText(), tf_new_username.getText(),
+                            tf_password.getText());
                     DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", user_id.getText());
                 } else {
                     System.out.println("Please fill in all information");

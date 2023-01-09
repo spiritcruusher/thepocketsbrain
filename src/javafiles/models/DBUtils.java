@@ -22,6 +22,8 @@ import javafx.scene.Node;
 
 public class DBUtils {
 
+    // CHANGE SCENE
+
     public static void changeScene(ActionEvent event, String fxmlFile, String title, String id) {
         Parent root = null;
 
@@ -63,13 +65,13 @@ public class DBUtils {
 
     }
 
+    // SIGN UP
+
     public static void signUpUser(ActionEvent event, String username, String password, String name) {
         Connection connection = null;
         PreparedStatement psInsert = null;
         PreparedStatement psCheckUserExists = null;
         ResultSet resultSet = null;
-        PreparedStatement userId = null;
-        ResultSet idResultSet = null;
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql_ihm", "root", "mysql123");
@@ -88,21 +90,9 @@ public class DBUtils {
                 psInsert.setString(2, password);
                 psInsert.setString(3, name);
                 psInsert.executeUpdate();
-                userId = connection.prepareStatement("SELECT user_id FROM users WHERE username = ?");
-                userId.setString(1, username);
-                idResultSet = userId.executeQuery();
-                if (idResultSet.isBeforeFirst()) {
-                    System.out.println("User already exists !");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("You cannot user this username!");
-                    alert.show();
-                } else {
-                    String retrievedId = idResultSet.getString("user_id");
+                changeScene(event, "/resources/fxml/log-in.fxml", "Profile", null);
 
-                    changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", retrievedId);
-                }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -136,6 +126,8 @@ public class DBUtils {
             }
         }
     }
+
+    // LOG IN
 
     public static void logInUser(ActionEvent event, String username, String password) {
         Connection connection = null;
@@ -202,140 +194,41 @@ public class DBUtils {
         }
     }
 
-    public static void updateUserPassword(ActionEvent event, String username, String oldPassword, String newPassword) {
+    // UPDATE PASSWORD
+
+    public static void updateUserPassword(ActionEvent event, String user_id, String oldPassword, String newPassword) {
         Connection connection = null;
         PreparedStatement psInsert = null;
         ResultSet resultSet = null;
+        PreparedStatement psCheckPassword = null;
+        ResultSet checkResultSet = null;
 
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql_ihm", "root", "mysql123");
-            psInsert = connection.prepareStatement("UPDATE users SET password = ? WHERE username = ?");
-            psInsert.setString(1, newPassword);
-            psInsert.setString(2, username);
-            psInsert.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        if (psInsert != null) {
-            try {
-                psInsert.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void updateUserUsername(ActionEvent event, String username, String newUsername, String password,
-            String name) {
-        Connection connection = null;
-        PreparedStatement psInsert = null;
-        PreparedStatement psCheckUserExists = null;
-        ResultSet resultSet = null;
-        PreparedStatement userId = null;
-        ResultSet idResultSet = null;
-
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql_ihm", "root", "mysql123");
-            psCheckUserExists = connection.prepareStatement("SELECT username FROM users WHERE username = ?");
-            psCheckUserExists.setString(1, username);
-            resultSet = psCheckUserExists.executeQuery();
-
-            if (resultSet.isBeforeFirst()) {
-                System.out.println("User already exists !");
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("You cannot use this username!");
-                alert.show();
-            } else {
-                psInsert = connection.prepareStatement("UPDATE users SET username = ? WHERE username = ?");
-                psInsert.setString(1, newUsername);
-                psInsert.setString(2, username);
-                psInsert.executeUpdate();
-                userId = connection.prepareStatement("SELECT user_id FROM users WHERE username = ?");
-                userId.setString(1, username);
-                idResultSet = userId.executeQuery();
-                String retrievedId = idResultSet.getString("user_id");
-                changeScene(event, "/resources/fxml/username-update.fxml", "Profile",
-                        retrievedId);
-
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (resultSet != null) {
-                try {
-                    resultSet.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        if (psCheckUserExists != null) {
-            try {
-                psCheckUserExists.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (psInsert != null) {
-            try {
-                psInsert.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void updateUserName(ActionEvent event, String username, String name, String password) {
-        Connection connection = null;
-        PreparedStatement psInsert = null;
-        ResultSet resultSet = null;
-        PreparedStatement psGet = null;
-        ResultSet resultSet2 = null;
-        PreparedStatement userId = null;
-        ResultSet idResultSet = null;
-
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql_ihm", "root", "mysql123");
-            psInsert = connection.prepareStatement("UPDATE users SET name = ? WHERE username = ?");
-            psInsert.setString(1, name);
-            psInsert.setString(2, username);
-            psInsert.executeUpdate();
-            psGet = connection.prepareStatement("SELECT name FROM users WHERE username = ?");
-            psGet.setString(1, username);
-            resultSet2 = psGet.executeQuery();
-            userId = connection.prepareStatement("SELECT user_id FROM users WHERE username = ?");
-            userId.setString(1, username);
-            idResultSet = userId.executeQuery();
-            String retrievedId = idResultSet.getString("user_id");
-            changeScene(event, "/resources/fxml/name-update.fxml", "Profile", retrievedId);
-            if (!resultSet2.isBeforeFirst()) {
+            psCheckPassword = connection.prepareStatement("SELECT password FROM users WHERE user_id = ?");
+            psCheckPassword.setString(1, user_id);
+            checkResultSet = psCheckPassword.executeQuery();
+            if (!checkResultSet.isBeforeFirst()) {
                 System.out.println("User not found in the database!");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Provided credentials are incorrect!");
                 alert.show();
+            } else {
+                while (checkResultSet.next()) {
+                    String retrievedPassword = checkResultSet.getString("password");
+                    if (retrievedPassword.equals(oldPassword)) {
+                        psInsert = connection.prepareStatement("UPDATE users SET password = ? WHERE user_id = ?");
+                        psInsert.setString(1, newPassword);
+                        psInsert.setString(2, user_id);
+                        psInsert.executeUpdate();
+
+                    } else {
+                        System.out.println("Password did not match!");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Provided credentials are incorrect!");
+                        alert.show();
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -348,6 +241,130 @@ public class DBUtils {
                 }
             }
         }
+        if (psInsert != null) {
+            try {
+                psInsert.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // UPDATE USERNAME
+
+    public static void updateUserUsername(ActionEvent event, String user_id, String newUsername, String password) {
+        Connection connection = null;
+        PreparedStatement psInsert = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql_ihm", "root", "mysql123");
+            preparedStatement = connection.prepareStatement("SELECT password FROM users WHERE user_id = ?");
+            preparedStatement.setString(1, user_id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("User not found in the database!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Provided credentials are incorrect!");
+                alert.show();
+            } else {
+                while (resultSet.next()) {
+                    String retrievedPassword = resultSet.getString("password");
+                    if (retrievedPassword.equals(password)) {
+                        psInsert = connection.prepareStatement("UPDATE users SET username = ? WHERE user_id = ?");
+                        psInsert.setString(1, newUsername);
+                        psInsert.setString(2, user_id);
+                        psInsert.executeUpdate();
+                    } else {
+                        System.out.println("Password did not match!");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Provided credentials are incorrect!");
+                        alert.show();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if (psInsert != null) {
+            try {
+                psInsert.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateUserName(ActionEvent event, String user_id, String newName, String password) {
+        Connection connection = null;
+        PreparedStatement psInsert = null;
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mysql_ihm", "root", "mysql123");
+            preparedStatement = connection.prepareStatement("SELECT password FROM users WHERE user_id = ?");
+            preparedStatement.setString(1, user_id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("User not found in the database!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Provided credentials are incorrect!");
+                alert.show();
+            } else {
+                while (resultSet.next()) {
+                    String retrievedPassword = resultSet.getString("password");
+                    if (retrievedPassword.equals(password)) {
+                        psInsert = connection.prepareStatement("UPDATE users SET name = ? WHERE user_id = ?");
+                        psInsert.setString(1, newName);
+                        psInsert.setString(2, user_id);
+                        psInsert.executeUpdate();
+                    } else {
+                        System.out.println("Password did not match!");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Provided credentials are incorrect!");
+                        alert.show();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         if (psInsert != null) {
             try {
                 psInsert.close();

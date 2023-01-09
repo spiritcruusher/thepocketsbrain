@@ -33,7 +33,7 @@ public class UserNameUpdateController implements Initializable {
 
             @Override
             public void handle(ActionEvent event) {
-                DBUtils.updateUserName(event, label_username.getText(), tf_new_name.getText(), tf_password.getText());
+                DBUtils.updateUserName(event, user_id.getText(), tf_new_name.getText(), tf_password.getText());
                 DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", user_id.getText());
             }
 

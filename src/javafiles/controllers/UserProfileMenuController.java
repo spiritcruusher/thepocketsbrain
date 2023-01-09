@@ -78,6 +78,7 @@ public class UserProfileMenuController implements Initializable {
     public void setUserInformation(String id) {
         user_id.setText(id);
         label_username.setText(DBUtils.getUsername(id));
+        label_username_menu.setText(DBUtils.getUsername(id));
         label_name.setText(DBUtils.getUserName(id));
     }
 }

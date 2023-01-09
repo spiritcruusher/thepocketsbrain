@@ -41,7 +41,8 @@ public class UserPasswordUpdateController implements Initializable {
                 if (!tf_old_password.getText().trim().isEmpty() && !tf_new_password.getText().trim().isEmpty()
                         && !tf_new_password_repeat.getText().trim().isEmpty()) {
                     if (tf_new_password_repeat.getText().equals(tf_new_password.getText())) {
-                        DBUtils.updateUserPassword(event, label_username.getText(), null, tf_new_password.getText());
+                        DBUtils.updateUserPassword(event, user_id.getText(), tf_old_password.getText(),
+                                tf_new_password.getText());
                         DBUtils.changeScene(event, "/resources/fxml/user-profile.fxml", "Profile", user_id.getText());
                     } else {
                         System.out.println("Please enter identical passwords");
